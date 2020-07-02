@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#00B901</color>
+    <color name="colorAccent">#00B901</color>
+    <color name="colorBackground">#FFFFFF</color>
+    <color name="colorDivider">#F0F0F0</color>
+    <color name="colorStroke">#F0F0F0</color>
+    <!-- Text -->
+    <color name="textDark">#000000</color>
+    <color name="textSub">#747474</color>
+    <color name="textLight">#FFFFFF</color>
+    <!-- Button -->
+    <color name="buttonDefault">#E0E0E0</color>
+    <color name="buttonActivate">#00B901</color>
+    <color name="buttonAdd">#747474</color>
+    <color name="buttonClear">#4E5263</color>
+</resources>

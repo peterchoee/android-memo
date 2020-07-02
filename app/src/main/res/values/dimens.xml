@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UI Margin & Padding -->
+    <dimen name="space_16dp">16dp</dimen>
+    <dimen name="space_12dp">12dp</dimen>
+    <dimen name="space_8dp">8dp</dimen>
+    <dimen name="space_6dp">6dp</dimen>
+    <dimen name="space_4dp">4dp</dimen>
+    <dimen name="space_1dp">1dp</dimen>
+    <!-- Component -->
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="stroke_width">1dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_radius">8dp</dimen>
+    <dimen name="button_height">45dp</dimen>
+    <dimen name="button_radius">8dp</dimen>
+    <dimen name="button_clear_radius">100dp</dimen>
+    <!-- Text -->
+    <dimen name="text_toolbar">21sp</dimen>
+    <dimen name="text_toolbar_number">12sp</dimen>
+    <dimen name="text_date_small">11sp</dimen>
+    <dimen name="text_date_large">12sp</dimen>
+    <dimen name="text_contents">14sp</dimen>
+    <dimen name="text_button_small">12sp</dimen>
+    <dimen name="text_button_large">16sp</dimen>
+</resources>

@@ -1,0 +1,65 @@
+<resources
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="Toolbar.Icon.Dark" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/textDark</item>
+    </style>
+
+    <!-- Font(Text) Style -->
+    <style name="Text.Toolbar.Dark" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_extrabold</item>
+        <item name="android:textSize">@dimen/text_toolbar</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="Text.Number.Dark" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_bold</item>
+        <item name="android:textSize">@dimen/text_toolbar_number</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="Text.Date.Dark.Small" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_regular</item>
+        <item name="android:textSize">@dimen/text_date_small</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="Text.Date.Dark.Large" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_regular</item>
+        <item name="android:textSize">@dimen/text_date_large</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="Text.Contents.Dark" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_regular</item>
+        <item name="android:textSize">@dimen/text_contents</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <style name="Text.Contents.Sub" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_regular</item>
+        <item name="android:textSize">@dimen/text_contents</item>
+        <item name="android:textColor">@color/textSub</item>
+    </style>
+
+    <style name="Text.Button.Light.Large" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_bold</item>
+        <item name="android:textSize">@dimen/text_button_large</item>
+        <item name="android:textColor">@color/textLight</item>
+    </style>
+
+    <style name="Text.Button.Sub.Small" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/nanum_square_bold</item>
+        <item name="android:textSize">@dimen/text_button_small</item>
+        <item name="android:textColor">@color/textSub</item>
+    </style>
+
+</resources>
