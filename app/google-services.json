@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "210737419222",
+    "firebase_url": "https://simplememo-aafb1.firebaseio.com",
+    "project_id": "simplememo-aafb1",
+    "storage_bucket": "simplememo-aafb1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210737419222:android:51bbd30cf06a553c514a77",
+        "android_client_info": {
+          "package_name": "io.choedeb.android.memo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210737419222-vve1vl5kmoig0l62n6adg1068alcl9pg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.choedeb.android.memo",
+            "certificate_hash": "3c0e281abf17e85b6be8855e3359808949835e8f"
+          }
+        },
+        {
+          "client_id": "210737419222-ogoe38n2rlv29go8scfemj8pg65rb4fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVQqvRs5vJGIJkgSFl_nvyX1TKzWzdccU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210737419222-ogoe38n2rlv29go8scfemj8pg65rb4fh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

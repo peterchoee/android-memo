@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">메모앱</string>
+    <string name="app_name">메모장</string>
     <!-- Toolbar -->
     <string name="toolbar_title_memo">전체메모</string>
     <!-- Menu -->
@@ -13,7 +13,7 @@
     <string name="text_hint_contents">내용을 입력하세요</string>
     <string name="text_info_thumbnail">첫 번째 사진이 대표사진(썸네일)로 지정됩니다.</string>
     <string name="text_gallery_pick">갤러리 선택</string>
-    <string name="text_permission_denied">권한이 거부되어 기능을 사용할 수 없습니다.</string>
+    <string name="text_permission_denied">권한이 거부되어 기능을 사용할 수 없습니다.\n설정 > 앱정보 > 앱권한에서 설정할 수 있습니다.</string>
     <!-- Dialog -->
     <string name="text_dialog_link_title">URL(링크)를 입력해주세요.</string>
     <string name="text_dialog_link_positive">확인</string>
@@ -36,4 +36,8 @@
     <string name="description_clear_image">이미지 삭제 버튼</string>
     <string name="description_image_expanded">확대된 이미지</string>
     <string name="toast_camera_disable">카메라를 사용할 수 없는 단말기 입니다.</string>
+    <!-- AdMob -->
+    <string name="admob_app_id">ca-app-pub-2061208236024523~9007211690</string>
+    <string name="admob_banner_id_detail">ca-app-pub-2061208236024523/3263930424</string>
+    <string name="admob_banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
