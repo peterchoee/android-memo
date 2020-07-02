@@ -157,7 +157,7 @@
             android:fitsSystemWindows="true"
             android:layout_gravity="center_horizontal|bottom"
             ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/admob_banner_id_test"/>
+            ads:adUnitId="@string/admob_banner_id_detail"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
