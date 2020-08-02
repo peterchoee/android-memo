@@ -1,4 +1,4 @@
-# android-mvvm-memo
+# 수정중!!! 
 사진 촬영, 갤러리 이미지 선택, 이미지 링크 삽입 기능을 가진 메모 앱  
 ​
 ## Environment
