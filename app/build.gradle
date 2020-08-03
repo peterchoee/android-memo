@@ -81,8 +81,4 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
 
     //Module
-    implementation project(path: ':presentation')
-    implementation project(path: ':domain')
-    implementation project(path: ':data')
-    implementation project(path: ':common')
 }
