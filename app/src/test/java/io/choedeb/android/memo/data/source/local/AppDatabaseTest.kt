@@ -4,9 +4,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import io.choedeb.android.memo.data.Image
-import io.choedeb.android.memo.data.Memo
-import io.choedeb.android.memo.data.MemoAndImages
+import io.choedeb.android.memo.data.local.AppDatabase
+import io.choedeb.android.memo.data.local.AppDatabaseDao
 import org.junit.*
 import org.junit.runner.RunWith
 import org.koin.test.AutoCloseKoinTest
@@ -32,10 +31,24 @@ class AppDatabaseTest : AutoCloseKoinTest() {
             .build()
         databaseDao = database.appDatabaseDao()
 
-        memo = Memo(memoId = 1, title = "제목1", contents = "내용1")
+        memo = Memo(
+            memoId = 1,
+            title = "제목1",
+            contents = "내용1"
+        )
         images = ArrayList()
-        images.add(Image(imageId = 1, image = "이미지1"))
-        images.add(Image(imageId = 2, image = "이미지2"))
+        images.add(
+            Image(
+                imageId = 1,
+                image = "이미지1"
+            )
+        )
+        images.add(
+            Image(
+                imageId = 2,
+                image = "이미지2"
+            )
+        )
     }
 
     @After
@@ -52,7 +65,12 @@ class AppDatabaseTest : AutoCloseKoinTest() {
             .test()
             .assertValue {
                 val newMemoList = ArrayList<MemoAndImages>()
-                newMemoList.add(MemoAndImages(memo, images))
+                newMemoList.add(
+                    MemoAndImages(
+                        memo,
+                        images
+                    )
+                )
 
                 it.size == newMemoList.size
             }
@@ -65,7 +83,10 @@ class AppDatabaseTest : AutoCloseKoinTest() {
         databaseDao.getMemo(1)
             .test()
             .assertValue {
-                it == MemoAndImages(memo, images)
+                it == MemoAndImages(
+                    memo,
+                    images
+                )
             }
     }
 

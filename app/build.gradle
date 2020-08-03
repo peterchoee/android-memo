@@ -6,34 +6,37 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
-apply plugin: 'com.google.gms.google-services'
-
-apply plugin: 'com.google.firebase.crashlytics'
+apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion versions.compileSdk
+
     defaultConfig {
-        applicationId "io.choedeb.android.memo"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0.0"
+        applicationId "com.ddd4.dropit"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         targetCompatibility = "8"
         sourceCompatibility = "8"
     }
-    dataBinding {
-        enabled = true
+
+    buildFeatures {
+        dataBinding = true
     }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -43,42 +46,50 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.core:core-ktx:$ktx_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "com.google.android.material:material:$material_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    testImplementation "androidx.arch.core:core-testing:$arch_version"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    testImplementation "androidx.room:room-testing:$room_version"
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-core-ext:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-ext:$koin_version"
-    testImplementation "org.koin:koin-test:$koin_version"
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava3:rxandroid:$rxjava_version"
-    implementation "com.github.akarnokd:rxjava3-bridge:$rxjava_version"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
-    implementation "com.orhanobut:logger:$logger_version"
-    implementation "com.google.firebase:firebase-analytics:$firebase_analytics_version"
-    implementation "com.google.firebase:firebase-crashlytics:$firebase_crashlytics_version"
-    implementation "com.google.android.gms:play-services-ads:$google_ads_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlinVersion"
+    implementation "androidx.appcompat:appcompat:$versions.appcompatVersion"
+    implementation "androidx.core:core-ktx:$versions.ktxVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayoutVersion"
+    implementation "com.google.android.material:material:$versions.materialVersion"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycleVersion"
+    testImplementation "androidx.arch.core:core-testing:$versions.archVersion"
+
+    implementation "androidx.room:room-runtime:$versions.roomVersion"
+    implementation "androidx.room:room-rxjava2:$versions.roomVersion"
+    kapt "androidx.room:room-compiler:$versions.roomVersion"
+    testImplementation "androidx.room:room-testing:$versions.roomVersion"
+
+    implementation "org.koin:koin-core:$versions.koinVersion"
+    implementation "org.koin:koin-core-ext:$versions.koinVersion"
+    implementation "org.koin:koin-android:$versions.koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$versions.koinVersion"
+    implementation "org.koin:koin-androidx-ext:$versions.koinVersion"
+    testImplementation "org.koin:koin-test:$versions.koinVersion"
+
+    implementation "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion"
+    implementation "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion"
+    implementation "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion"
+
+    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glideVersion"
+
+    implementation "com.orhanobut:logger:$versions.loggerVersion"
+
     /* Test */
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
-    testImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
-    androidTestImplementation "androidx.test:core:$androidx_test_version"
-    androidTestImplementation "androidx.test:runner:$androidx_test_version"
-    androidTestImplementation "androidx.test:rules:$androidx_test_version"
+    //testImplementation "junit:junit:$junit_version"
+    //testImplementation "org.robolectric:robolectric:$robolectric_version"
+    //testImplementation "androidx.test.ext:junit:$junit_ext_version"
+    //androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
+    //androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
+    //androidTestImplementation "androidx.test:core:$androidx_test_version"
+    //androidTestImplementation "androidx.test:runner:$androidx_test_version"
+    //androidTestImplementation "androidx.test:rules:$androidx_test_version"
 
     //Module
+    implementation project(path: ':common')
+    implementation project(path: ':presentation')
+    implementation project(path: ':domain')
+    implementation project(path: ':data')
 }
