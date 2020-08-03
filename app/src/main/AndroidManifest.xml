@@ -33,7 +33,7 @@
                 android:resource="@xml/file_paths"/>
         </provider>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="io.choedeb.android.memo.presentation.ui.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailActivity" />
-        <activity android:name=".ui.write.WriteActivity"/>
+        <activity android:name="io.choedeb.android.memo.presentation.ui.detail.DetailActivity" />
+        <activity android:name="io.choedeb.android.memo.presentation.ui.write.WriteActivity"/>
     </application>
 
 </manifest>

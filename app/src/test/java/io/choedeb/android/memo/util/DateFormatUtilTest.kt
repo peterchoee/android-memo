@@ -1,5 +1,6 @@
 package io.choedeb.android.memo.util
 
+import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
