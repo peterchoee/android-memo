@@ -6,16 +6,14 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import io.choedeb.android.memo.BR
-import io.choedeb.android.memo.R
-import io.choedeb.android.memo.databinding.ActivityDetailBinding
-import io.choedeb.android.memo.presentation.ui.base.BaseActivity
+import io.choedeb.android.memo.presentation.BR
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.databinding.ActivityDetailBinding
+import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.main.MainActivity
 import io.choedeb.android.memo.presentation.ui.write.WriteActivity
-import io.choedeb.android.memo.util.AppValueUtil
-import io.choedeb.android.memo.util.ExpandedImageDialog
+import io.choedeb.android.memo.presentation.util.AppValueUtil
+import io.choedeb.android.memo.presentation.util.ExpandedImageDialog
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -35,11 +33,6 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //Init Admob
-        MobileAds.initialize(this) {}
-        val adRequest = AdRequest.Builder().build()
-        adView.loadAd(adRequest)
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

@@ -7,10 +7,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.RowWriteImageListBinding
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.ui.write.WriteViewModel
 
 class WriteImageRecyclerAdapter(
-    var images: List<Image>?,
+    var images: List<PresentationEntity.Image>?,
     val viewModel: WriteViewModel
 ): RecyclerView.Adapter<WriteImageRecyclerAdapter.ImageViewHolder>() {
 

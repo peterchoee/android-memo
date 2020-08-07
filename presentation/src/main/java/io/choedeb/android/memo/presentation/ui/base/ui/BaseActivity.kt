@@ -1,4 +1,4 @@
-package io.choedeb.android.memo.presentation.ui.base
+package io.choedeb.android.memo.presentation.ui.base.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

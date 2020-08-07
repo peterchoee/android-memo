@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import io.choedeb.android.memo.presentation.BR
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.ActivityWriteBinding
-import io.choedeb.android.memo.presentation.ui.base.BaseActivity
+import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.main.MainActivity
 import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.ExpandedImageDialog

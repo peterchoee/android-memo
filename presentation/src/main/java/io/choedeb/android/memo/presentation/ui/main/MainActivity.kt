@@ -3,10 +3,10 @@ package io.choedeb.android.memo.presentation.ui.main
 import android.content.Intent
 import android.widget.Toast
 import androidx.lifecycle.Observer
-import io.choedeb.android.memo.BR
-import io.choedeb.android.memo.R
-import io.choedeb.android.memo.databinding.ActivityMainBinding
-import io.choedeb.android.memo.presentation.ui.base.BaseActivity
+import io.choedeb.android.memo.presentation.BR
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.databinding.ActivityMainBinding
+import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.detail.DetailActivity
 import io.choedeb.android.memo.presentation.ui.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -20,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.getAllMemo()
+        viewModel.getMemos()
     }
 
     override fun setObserve() {
