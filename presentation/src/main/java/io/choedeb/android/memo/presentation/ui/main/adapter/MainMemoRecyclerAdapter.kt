@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import io.choedeb.android.memo.R
-import io.choedeb.android.memo.data.MemoAndImages
-import io.choedeb.android.memo.databinding.RowMainMemoListBinding
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.databinding.RowMainMemoListBinding
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.ui.main.MainViewModel
 
 class MainMemoRecyclerAdapter(
-    var memos: List<MemoAndImages>?,
+    var memos: List<PresentationEntity.MemoAndImages>?,
     val viewModel: MainViewModel
 ): RecyclerView.Adapter<MainMemoRecyclerAdapter.MemoViewHolder>() {
 

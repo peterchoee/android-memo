@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import io.choedeb.android.memo.R
-import io.choedeb.android.memo.data.Image
-import io.choedeb.android.memo.databinding.RowDetailImageListBinding
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.databinding.RowDetailImageListBinding
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.ui.detail.DetailViewModel
 
 class DetailImageRecyclerAdapter(
-    var images: List<Image>?,
+    var images: List<PresentationEntity.Image>?,
     val viewModel: DetailViewModel
 ): RecyclerView.Adapter<DetailImageRecyclerAdapter.ImageViewHolder>() {
 
