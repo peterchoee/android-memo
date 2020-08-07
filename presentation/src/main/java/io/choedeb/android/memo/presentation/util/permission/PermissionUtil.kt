@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import io.choedeb.android.memo.presentation.util.permission.PermissionStatus
 
 class PermissionUtil(
     private val activity: Activity

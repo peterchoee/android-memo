@@ -4,11 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
-import io.choedeb.android.memo.data.Memo
-import io.choedeb.android.memo.data.MemoAndImages
-import io.choedeb.android.memo.data.source.MemoDataSource
 import io.choedeb.android.memo.presentation.ui.base.BaseViewModel
-import io.choedeb.android.memo.util.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 

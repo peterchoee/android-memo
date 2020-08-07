@@ -35,6 +35,11 @@ dependencies {
     implementation "$appDependencies.koinViewModel"
     implementation "$appDependencies.koinExt"
     testImplementation "$appDependencies.koinTest"
+    //room
+    implementation "$appDependencies.roomRuntime"
+    implementation "$appDependencies.roomRxJava2"
+    kapt "$appDependencies.roomCompiler"
+    testImplementation "$appDependencies.roomTest"
     //logger
     implementation "$appDependencies.logger"
 }
