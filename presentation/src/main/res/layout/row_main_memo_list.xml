@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="io.choedeb.android.memo.data.entity.MemoAndImages" />
+            type="io.choedeb.android.memo.presentation.entity.PresentationEntity.MemoAndImages" />
 
         <variable
             name="viewModel"

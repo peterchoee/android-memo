@@ -3,17 +3,15 @@ package io.choedeb.android.memo.presentation.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
-import io.choedeb.android.memo.data.Image
-import io.choedeb.android.memo.data.Memo
-import io.choedeb.android.memo.data.source.MemoDataSource
-import io.choedeb.android.memo.presentation.ui.base.BaseViewModel
-import io.choedeb.android.memo.util.DateFormatUtil
-import io.choedeb.android.memo.util.SingleLiveEvent
+import io.choedeb.android.memo.domain.usecase.MemoUseCase
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
+import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
+import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class DetailViewModel(
-    private val memoDataSource: MemoDataSource
+    private val memoUseCase: MemoUseCase
 ) : BaseViewModel() {
 
     private val _updateAtText = MutableLiveData<String>()
@@ -25,8 +23,8 @@ class DetailViewModel(
     private val _contentsText = MutableLiveData<String>()
     val contentsText: LiveData<String> = _contentsText
 
-    private val _imageList = MutableLiveData<List<Image>>()
-    val imageList: LiveData<List<Image>> = _imageList
+    private val _imageList = MutableLiveData<List<PresentationEntity.Image>>()
+    val imageList: LiveData<List<PresentationEntity.Image>> = _imageList
 
     private val _isImageVisible = MutableLiveData<Boolean>()
     val isImageVisible: LiveData<Boolean> = _isImageVisible

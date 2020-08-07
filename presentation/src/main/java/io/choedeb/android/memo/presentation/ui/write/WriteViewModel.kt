@@ -16,7 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
 import io.choedeb.android.memo.domain.repository.MemoRepository
 import io.choedeb.android.memo.presentation.R
-import io.choedeb.android.memo.presentation.ui.base.BaseViewModel
+import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent

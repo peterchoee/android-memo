@@ -12,7 +12,7 @@
 
         <variable
             name="item"
-            type="io.choedeb.android.memo.data.entity.Memo" />
+            type="io.choedeb.android.memo.presentation.entity.PresentationEntity.Memo" />
 
         <variable
             name="viewModel"
@@ -145,19 +145,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
-
-        <!-- Google AbMob -->
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/buttonDefault"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:fitsSystemWindows="true"
-            android:layout_gravity="center_horizontal|bottom"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/admob_banner_id_detail"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

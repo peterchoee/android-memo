@@ -1,4 +1,4 @@
-package io.choedeb.android.memo.presentation.ui.base
+package io.choedeb.android.memo.presentation.ui.base.ui
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable

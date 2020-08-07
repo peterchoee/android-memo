@@ -6,6 +6,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.ui.detail.DetailViewModel
 import io.choedeb.android.memo.presentation.ui.detail.adapter.DetailImageRecyclerAdapter
 import io.choedeb.android.memo.presentation.ui.main.MainViewModel
@@ -29,7 +31,7 @@ object BindingAdapterUtil {
 
     @JvmStatic
     @BindingAdapter(value = ["items", "viewModel"])
-    fun setMemoItems(view: RecyclerView, memoList: List<MemoAndImages>?, viewModel: MainViewModel) {
+    fun setMemoItems(view: RecyclerView, memoList: List<PresentationEntity.MemoAndImages>?, viewModel: MainViewModel) {
         view.adapter?.run {
             if (this is MainMemoRecyclerAdapter) {
                 this.memos = memoList
@@ -44,7 +46,7 @@ object BindingAdapterUtil {
 
     @JvmStatic
     @BindingAdapter(value = ["items", "viewModel"])
-    fun setDetailItems(view: RecyclerView, imageList: List<Image>?, viewModel: DetailViewModel) {
+    fun setDetailItems(view: RecyclerView, imageList: List<PresentationEntity.Image>?, viewModel: DetailViewModel) {
         view.adapter?.run {
             if (this is DetailImageRecyclerAdapter) {
                 this.images = imageList
@@ -59,7 +61,7 @@ object BindingAdapterUtil {
 
     @JvmStatic
     @BindingAdapter(value = ["items", "viewModel"])
-    fun setWriteItems(view: RecyclerView, imageList: List<Image>?, viewModel: WriteViewModel) {
+    fun setWriteItems(view: RecyclerView, imageList: List<PresentationEntity.Image>?, viewModel: WriteViewModel) {
         view.adapter?.run {
             if (this is WriteImageRecyclerAdapter) {
                 this.images = imageList
