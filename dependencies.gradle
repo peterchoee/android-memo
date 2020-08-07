@@ -47,6 +47,10 @@ ext {
             koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
             koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
             koinTest                : "org.koin:koin-test:$versions.koinVersion",
+            roomRuntime             : "androidx.room:room-runtime:$versions.roomVersion",
+            roomRxJava2             : "androidx.room:room-rxjava2:$versions.roomVersion",
+            roomCompiler            : "androidx.room:room-compiler:$versions.roomVersion",
+            roomTest                : "androidx.room:room-testing:$versions.roomVersion",
             logger                  : "com.orhanobut:logger:$versions.loggerVersion",
     ]
     //presentation Module
@@ -80,7 +84,10 @@ ext {
             koinAndroid             : "org.koin:koin-android:$versions.koinVersion",
             koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
             koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
-            koinTest                : "org.koin:koin-test:$versions.koinVersion"
+            koinTest                : "org.koin:koin-test:$versions.koinVersion",
+            rxJava3                 : "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion",
+            rxAndroid3              : "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion",
+            rxJavaBridge            : "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion",
     ]
     //data Module
     dataDependencies = [

@@ -4,7 +4,6 @@ import androidx.room.*
 import java.util.*
 
 /**
- * This Class Role
  * Local Room Database Entity & Data Layer Entity
  */
 sealed class DataEntity {

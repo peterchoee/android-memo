@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
-import io.choedeb.android.memo.R
-import io.choedeb.android.memo.databinding.DialogImageExpandedBinding
+import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.databinding.DialogImageExpandedBinding
 
 class ExpandedImageDialog(private val activity: Activity) {
 

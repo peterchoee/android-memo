@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
+import io.choedeb.android.memo.presentation.ui.base.BaseViewModel
 import io.choedeb.android.memo.domain.usecase.MemoUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
