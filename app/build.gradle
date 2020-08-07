@@ -35,4 +35,6 @@ dependencies {
     implementation "$appDependencies.koinViewModel"
     implementation "$appDependencies.koinExt"
     testImplementation "$appDependencies.koinTest"
+    //logger
+    implementation "$appDependencies.logger"
 }
