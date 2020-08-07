@@ -1,37 +1,12 @@
 apply plugin: 'com.android.library'
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+apply from: '../common-android.gradle'
 
 apply from: '../dependencies.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
-
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
     }
 
     buildFeatures {
@@ -40,38 +15,34 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlinVersion"
-    implementation "androidx.appcompat:appcompat:$versions.appcompatVersion"
-    implementation "androidx.core:core-ktx:$versions.ktxVersion"
-    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintlayoutVersion"
-    implementation "com.google.android.material:material:$versions.materialVersion"
-
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$versions.lifecycleVersion"
-    testImplementation "androidx.arch.core:core-testing:$versions.archVersion"
-
-    implementation "androidx.room:room-runtime:$versions.roomVersion"
-    implementation "androidx.room:room-rxjava2:$versions.roomVersion"
-    kapt "androidx.room:room-compiler:$versions.roomVersion"
-    testImplementation "androidx.room:room-testing:$versions.roomVersion"
-
-    implementation "org.koin:koin-core:$versions.koinVersion"
-    implementation "org.koin:koin-core-ext:$versions.koinVersion"
-    implementation "org.koin:koin-android:$versions.koinVersion"
-    implementation "org.koin:koin-androidx-viewmodel:$versions.koinVersion"
-    implementation "org.koin:koin-androidx-ext:$versions.koinVersion"
-    testImplementation "org.koin:koin-test:$versions.koinVersion"
-
-    implementation "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion"
-    implementation "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion"
-    implementation "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion"
-
-    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
-    annotationProcessor "com.github.bumptech.glide:compiler:$versions.glideVersion"
-
-    implementation "com.orhanobut:logger:$versions.loggerVersion"
-
-    //Module
-    implementation project(path: ':domain')
+    //module
+    implementation project("$modulization.common")
+    implementation project("$modulization.domain")
+    //android
+    implementation "$presentationDependencies.appcompat"
+    implementation "$presentationDependencies.ktx"
+    implementation "$presentationDependencies.constraint"
+    implementation "$presentationDependencies.material"
+    //glide
+    implementation "$presentationDependencies.glide"
+    kapt "$presentationDependencies.glideCompiler"
+    //logger
+    implementation "$presentationDependencies.logger"
+    //koin
+    implementation "$presentationDependencies.koinCore"
+    implementation "$presentationDependencies.koinCoreExt"
+    implementation "$presentationDependencies.koinAndroid"
+    implementation "$presentationDependencies.koinViewModel"
+    implementation "$presentationDependencies.koinExt"
+    testImplementation "$appDependencies.koinTest"
+    //lifecycle
+    implementation "$presentationDependencies.lifecycleViewModel"
+    implementation "$presentationDependencies.lifecycleLiveData"
+    implementation "$presentationDependencies.lifecycleSavedstate"
+    kapt "$presentationDependencies.lifecycleCompiler"
+    testImplementation "$presentationDependencies.lifecycleTest"
+    //rxJava3
+    implementation "$presentationDependencies.rxJava3"
+    implementation "$presentationDependencies.rxAndroid3"
+    implementation "$presentationDependencies.rxJavaBridge"
 }
