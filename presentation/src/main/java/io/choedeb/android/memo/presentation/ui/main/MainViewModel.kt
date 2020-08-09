@@ -3,17 +3,19 @@ package io.choedeb.android.memo.presentation.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
-import io.choedeb.android.memo.presentation.ui.base.BaseViewModel
 import io.choedeb.android.memo.domain.usecase.MemoUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
+import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
+import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel(
-    private val memoUseCase: MemoUseCase
+    private val memoUseCase: MemoUseCase,
+    private val memoMapper: PresentationMemoMapper,
+    private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
 
     val fabClick = SingleLiveEvent<Void>()
@@ -30,14 +32,17 @@ class MainViewModel(
 
     val showMessage = SingleLiveEvent<Boolean>()
 
-
     fun getMemos() {
         addDisposable(memoUseCase.getMemos()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it.isNotEmpty()) {
-                    _memoList.value = it
+                    _memoList.value = it.map { data ->
+                        PresentationEntity.MemoAndImages(
+                            memoMapper.toPresentationEntity(data.memo),
+                            imagesMapper.toPresentationEntity(data.images))
+                    }
                     _memoCount.value = it.size
                 } else {
                     val sampleMemoList = listOf(
@@ -53,7 +58,7 @@ class MainViewModel(
                     _memoCount.value = 0
                 }
             }, {
-                Logger.d(it.message)
+                //Logger.d(it.message)
                 showMessage.call()
             })
         )

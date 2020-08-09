@@ -56,6 +56,10 @@ app
 │   └── AndroidManifest.xml
 ```
 
+## Dependency Graph
+app 모듈에서 구현된 koin 의존성 그래프
+
+
 ## ShortCuts
 - [app Module](https://google.com, "app Module")
 - [common Module](https://google.com, "common Module")

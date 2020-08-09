@@ -1,6 +1,5 @@
 package io.choedeb.android.memo.presentation.entity
 
-import io.choedeb.android.memo.domain.entity.DomainEntity
 import java.util.*
 
 sealed class PresentationEntity {

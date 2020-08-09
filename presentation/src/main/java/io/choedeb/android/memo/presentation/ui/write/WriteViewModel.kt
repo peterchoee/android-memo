@@ -14,8 +14,12 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
-import io.choedeb.android.memo.domain.repository.MemoRepository
+import io.choedeb.android.memo.domain.entity.DomainEntity
+import io.choedeb.android.memo.domain.usecase.MemoUseCase
 import io.choedeb.android.memo.presentation.R
+import io.choedeb.android.memo.presentation.entity.PresentationEntity
+import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
+import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
@@ -31,7 +35,9 @@ import kotlin.collections.ArrayList
 
 class WriteViewModel(
     private val context: Context,
-    private val memoRepository: MemoRepository
+    private val memoUseCase: MemoUseCase,
+    private val memoMapper: PresentationMemoMapper,
+    private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
 
     private val _todayDate = MutableLiveData<String>()
@@ -45,8 +51,8 @@ class WriteViewModel(
     private val _contentsText = MutableLiveData<String>()
     val contentsText: LiveData<String> = _contentsText
 
-    private val _imageList = MutableLiveData<List<Image>>()
-    val imageList: LiveData<List<Image>> = _imageList
+    private val _imageList = MutableLiveData<List<PresentationEntity.Image>>()
+    val imageList: LiveData<List<PresentationEntity.Image>> = _imageList
 
     private val _isImageVisible = MutableLiveData<Boolean>()
     val isImageVisible: LiveData<Boolean> = _isImageVisible
@@ -60,7 +66,7 @@ class WriteViewModel(
 
     val showMessage = SingleLiveEvent<String>()
 
-    private var tempImageList = ArrayList<Image>()
+    private var tempImageList = ArrayList<PresentationEntity.Image>()
 
     private lateinit var currentImagePath: String
     private lateinit var imageEncoded: String
@@ -76,17 +82,22 @@ class WriteViewModel(
     }
 
     fun getMemo(memoId: Long) {
-        addDisposable(memoRepository.getMemo(memoId)
+        addDisposable(memoUseCase.getMemo(memoId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                _memoId.value = it.memo.memoId
-                _titleText.value = it.memo.title
-                _contentsText.value = it.memo.contents
-                if (it.images.isNotEmpty()) {
-                    _imageList.value = it.images
+            .map {
+                PresentationEntity.MemoAndImages(
+                    memoMapper.toPresentationEntity(it.memo),
+                    imagesMapper.toPresentationEntity(it.images))
+            }
+            .subscribe({ data ->
+                _memoId.value = data.memo.memoId
+                _titleText.value = data.memo.title
+                _contentsText.value = data.memo.contents
+                if (data.images.isNotEmpty()) {
+                    _imageList.value = data.images
                     _isImageVisible.value = true
-                    tempImageList = it.images as ArrayList<Image>
+                    tempImageList = data.images as ArrayList<PresentationEntity.Image>
                 }
             }, {
                 Logger.d(it.message)
@@ -95,8 +106,14 @@ class WriteViewModel(
     }
 
     fun saveMemo() {
-        addDisposable(memoRepository.saveMemoAndImages(
-                Memo(_memoId.value!!, _titleText.value.toString(), _contentsText.value.toString()), tempImageList)
+        addDisposable(memoUseCase.setMemoAndImages(
+            DomainEntity.Memo(
+                _memoId.value!!,
+                _titleText.value.toString(),
+                _contentsText.value.toString()
+            ), tempImageList.map {
+                DomainEntity.Image(imageId = it.imageId, memoId = it.memoId, image = it.image, order = it.order)
+            })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -138,16 +155,16 @@ class WriteViewModel(
         }
     }
 
-    fun setImageFromCamera() {
+    private fun setImageFromCamera() {
         val file = File(currentImagePath)
         val photoUri = Uri.fromFile(file)
 
-        tempImageList.add(Image(imageId = 0, image = photoUri.toString()))
+        tempImageList.add(PresentationEntity.Image(imageId = 0, image = photoUri.toString()))
         _imageList.value = tempImageList
         _isImageVisible.value = true
     }
 
-    fun setImageFromGallery(data: Intent?) {
+    private fun setImageFromGallery(data: Intent?) {
 
         val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
         val uriList = ArrayList<Uri>()
@@ -191,14 +208,14 @@ class WriteViewModel(
         }
 
         for (i in uriList.indices) {
-            tempImageList.add(Image(imageId = 0, image = uriList[i].toString()))
+            tempImageList.add(PresentationEntity.Image(imageId = 0, image = uriList[i].toString()))
         }
         _imageList.value = tempImageList
         _isImageVisible.value = true
     }
 
     fun setImageFromLink(url: String) {
-        tempImageList.add(Image(imageId = 0, image = url))
+        tempImageList.add(PresentationEntity.Image(imageId = 0, image = url))
         _imageList.value = tempImageList
         _isImageVisible.value = true
     }
