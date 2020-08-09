@@ -3,15 +3,21 @@ package io.choedeb.android.memo.presentation.ui.detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
+import io.choedeb.android.memo.domain.entity.DomainEntity
 import io.choedeb.android.memo.domain.usecase.MemoUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
+import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
+import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
+import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class DetailViewModel(
-    private val memoUseCase: MemoUseCase
+    private val memoUseCase: MemoUseCase,
+    private val memoMapper: PresentationMemoMapper,
+    private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
 
     private val _updateAtText = MutableLiveData<String>()
@@ -40,16 +46,23 @@ class DetailViewModel(
     }
 
     fun getMemoDetail(memoId: Long) {
-        addDisposable(memoDataSource.getMemo(memoId)
+        addDisposable(memoUseCase.getMemo(memoId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                Logger.d(it.toString())
-                _updateAtText.value = DateFormatUtil.compareFormatDate(it.memo.updateAt)
-                _titleText.value = it.memo.title
-                _contentsText.value = it.memo.contents
-                _imageList.value = it.images
-                _isImageVisible.value = true
+            .map {
+                PresentationEntity.MemoAndImages(
+                    memoMapper.toPresentationEntity(it.memo),
+                    imagesMapper.toPresentationEntity(it.images))
+            }
+            .subscribe({ data ->
+                //Logger.d(it.toString())
+                if (data != null) {
+                    _updateAtText.value = DateFormatUtil.compareFormatDate(data.memo.updateAt)
+                    _titleText.value = data.memo.title
+                    _contentsText.value = data.memo.contents
+                    _imageList.value = data.images
+                    _isImageVisible.value = true
+                }
             }, {
                 Logger.d(it.message)
                 showMessage.call()
@@ -58,13 +71,13 @@ class DetailViewModel(
     }
 
     fun onDeleteClicked(memoId: Long) {
-        addDisposable(memoDataSource.deleteMemo(Memo(memoId = memoId))
+        addDisposable(memoUseCase.deleteMemo(DomainEntity.Memo(memoId = memoId))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 completeDelete.call()
             }, {
-                Logger.d(it.message)
+                //Logger.d(it.message)
                 showMessage.call()
             })
         )
