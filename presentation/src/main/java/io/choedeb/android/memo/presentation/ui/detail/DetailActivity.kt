@@ -4,9 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import io.choedeb.android.memo.presentation.BR
+import io.choedeb.android.memo.common.toast
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.ActivityDetailBinding
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
@@ -19,17 +18,18 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
+class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_detail) {
 
-    override val layoutId: Int = R.layout.activity_detail
-    override val viewModel: DetailViewModel by viewModel()
-    override val bindingVariable: Int = BR.viewModel
-
-    private val expandedImageDialog: ExpandedImageDialog by inject {
-        parametersOf(this)
-    }
+    private val viewModel: DetailViewModel by viewModel()
+    private val expandedImageDialog: ExpandedImageDialog by inject { parametersOf(this) }
 
     private var memoId: Long = 0
+
+    override fun setBind() {
+        binding.apply {
+            detailVM = viewModel
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,7 @@ class DetailActivity : BaseActivity<ActivityDetailBinding, DetailViewModel>() {
             finish()
         })
         viewModel.showMessage.observe(this, Observer {
-            Toast.makeText(this, getString(R.string.toast_retry), Toast.LENGTH_SHORT).show()
+            this.toast(getString(R.string.toast_retry))
         })
     }
 

@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.detail.DetailActivity">
 
     <data>
@@ -11,11 +10,7 @@
         <import type="android.view.View"/>
 
         <variable
-            name="item"
-            type="io.choedeb.android.memo.presentation.entity.PresentationEntity.Memo" />
-
-        <variable
-            name="viewModel"
+            name="detailVM"
             type="io.choedeb.android.memo.presentation.ui.detail.DetailViewModel" />
 
     </data>
@@ -55,7 +50,7 @@
                     android:id="@+id/tvUpdateAt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.updateAtText}"
+                    android:text="@{detailVM.updateAtText}"
                     android:textAppearance="@style/Text.Date.Dark.Large"
                     android:layout_marginTop="@dimen/space_16dp"
                     android:layout_marginStart="@dimen/space_16dp"
@@ -69,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:text="@{viewModel.titleText}"
+                    android:text="@{detailVM.titleText}"
                     android:textAppearance="@style/Text.Contents.Dark"
                     android:paddingTop="@dimen/space_1dp"
                     android:layout_marginTop="@dimen/space_16dp"
@@ -100,7 +95,7 @@
                     android:minHeight="200dp"
                     android:gravity="top|start"
                     android:background="@android:color/transparent"
-                    android:text="@{viewModel.contentsText}"
+                    android:text="@{detailVM.contentsText}"
                     android:textAppearance="@style/Text.Contents.Dark"
                     android:scrollbars="vertical"
                     android:paddingTop="@dimen/space_1dp"
@@ -129,11 +124,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="90dp"
                     tools:listitem="@layout/row_detail_image_list"
-                    app:viewModel="@{viewModel}"
-                    app:items="@{viewModel.imageList}"
+                    app:viewModel="@{detailVM}"
+                    app:items="@{detailVM.imageList}"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:visibility="@{viewModel.isImageVisible ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{detailVM.isImageVisible ? View.VISIBLE : View.GONE}"
                     android:layout_marginTop="@dimen/space_16dp"
                     android:layout_marginBottom="@dimen/space_110dp"
                     android:paddingStart="@dimen/space_8dp"
