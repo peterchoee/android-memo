@@ -1,9 +1,8 @@
 package io.choedeb.android.memo.presentation.ui.main
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import io.choedeb.android.memo.presentation.BR
+import io.choedeb.android.memo.common.toast
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.ActivityMainBinding
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
@@ -12,15 +11,14 @@ import io.choedeb.android.memo.presentation.ui.write.WriteActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
-    override val layoutId: Int = R.layout.activity_main
-    override val viewModel: MainViewModel by viewModel()
-    override val bindingVariable: Int = BR.viewModel
+    private val viewModel: MainViewModel by viewModel()
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.getMemos()
+    override fun setBind() {
+        binding.apply {
+            mainVM = viewModel
+        }
     }
 
     override fun setObserve() {
@@ -40,7 +38,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
             }
         })
         viewModel.showMessage.observe(this, Observer {
-            Toast.makeText(this, getString(R.string.toast_retry), Toast.LENGTH_SHORT).show()
+            this.toast(getString(R.string.toast_retry))
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.getMemos()
     }
 }

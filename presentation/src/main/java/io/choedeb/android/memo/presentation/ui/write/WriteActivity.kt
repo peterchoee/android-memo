@@ -7,9 +7,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import io.choedeb.android.memo.presentation.BR
+import io.choedeb.android.memo.common.toast
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.ActivityWriteBinding
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
@@ -24,18 +23,16 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class WriteActivity : BaseActivity<ActivityWriteBinding, WriteViewModel>() {
+class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write) {
 
-    override val layoutId: Int = R.layout.activity_write
-    override val viewModel: WriteViewModel by viewModel()
-    override val bindingVariable: Int = BR.viewModel
+    private val viewModel: WriteViewModel by viewModel()
+    private val permissionUtil: PermissionUtil by inject { parametersOf(this) }
+    private val expandedImageDialog: ExpandedImageDialog by inject { parametersOf(this) }
 
-    private val permissionUtil: PermissionUtil by inject {
-        parametersOf(this)
-    }
-
-    private val expandedImageDialog: ExpandedImageDialog by inject {
-        parametersOf(this)
+    override fun setBind() {
+        binding.apply {
+            writeVM = viewModel
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +57,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding, WriteViewModel>() {
             finish()
         })
         viewModel.showMessage.observe(this, Observer {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            this.toast(getString(R.string.toast_retry))
         })
     }
 
@@ -85,7 +82,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding, WriteViewModel>() {
                         permissionUtil.getPermissionRequest(Manifest.permission.CAMERA, AppValueUtil.PERMISSION_CAMERA)
                     }
                     PermissionStatus.DENIED -> {
-                        Toast.makeText(this, getString(R.string.text_permission_denied), Toast.LENGTH_SHORT).show()
+                        this.toast(getString(R.string.text_permission_denied))
                     }
                 }
                 true
@@ -99,7 +96,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding, WriteViewModel>() {
                         permissionUtil.getPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE, AppValueUtil.PERMISSION_GALLERY)
                     }
                     PermissionStatus.DENIED -> {
-                        Toast.makeText(this, getString(R.string.text_permission_denied), Toast.LENGTH_SHORT).show()
+                        this.toast(getString(R.string.text_permission_denied))
                     }
                 }
                 true
