@@ -7,7 +7,6 @@ apply from: '../dependencies.gradle'
 android {
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildFeatures {

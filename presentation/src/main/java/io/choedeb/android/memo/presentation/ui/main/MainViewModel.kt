@@ -3,7 +3,7 @@ package io.choedeb.android.memo.presentation.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import io.choedeb.android.memo.domain.usecase.MemoUseCase
+import io.choedeb.android.memo.domain.usecase.GetMemosUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
 import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
@@ -13,7 +13,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel(
-    private val memoUseCase: MemoUseCase,
+    private val getMemosUseCase: GetMemosUseCase,
     private val memoMapper: PresentationMemoMapper,
     private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
@@ -33,7 +33,7 @@ class MainViewModel(
     val showMessage = SingleLiveEvent<Boolean>()
 
     fun getMemos() {
-        addDisposable(memoUseCase.getMemos()
+        addDisposable(getMemosUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

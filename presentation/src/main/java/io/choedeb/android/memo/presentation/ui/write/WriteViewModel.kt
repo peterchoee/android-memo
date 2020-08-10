@@ -15,7 +15,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.orhanobut.logger.Logger
 import io.choedeb.android.memo.domain.entity.DomainEntity
-import io.choedeb.android.memo.domain.usecase.MemoUseCase
+import io.choedeb.android.memo.domain.usecase.GetMemoUseCase
+import io.choedeb.android.memo.domain.usecase.SetMemoUseCase
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
@@ -33,9 +34,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * Context 참조 제거 해야함!
+ */
 class WriteViewModel(
     private val context: Context,
-    private val memoUseCase: MemoUseCase,
+    private val getMemoUseCase: GetMemoUseCase,
+    private val setMemoUseCase: SetMemoUseCase,
     private val memoMapper: PresentationMemoMapper,
     private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
@@ -82,7 +87,7 @@ class WriteViewModel(
     }
 
     fun getMemo(memoId: Long) {
-        addDisposable(memoUseCase.getMemo(memoId)
+        addDisposable(getMemoUseCase.execute(memoId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
@@ -106,7 +111,7 @@ class WriteViewModel(
     }
 
     fun saveMemo() {
-        addDisposable(memoUseCase.setMemoAndImages(
+        addDisposable(setMemoUseCase.execute(
             DomainEntity.Memo(
                 _memoId.value!!,
                 _titleText.value.toString(),
