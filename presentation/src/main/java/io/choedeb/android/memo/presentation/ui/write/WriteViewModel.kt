@@ -88,8 +88,6 @@ class WriteViewModel(
 
     fun getMemo(memoId: Long) {
         addDisposable(getMemoUseCase.execute(memoId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .map {
                 PresentationEntity.MemoAndImages(
                     memoMapper.toPresentationEntity(it.memo),
@@ -119,8 +117,6 @@ class WriteViewModel(
             ), tempImageList.map {
                 DomainEntity.Image(imageId = it.imageId, memoId = it.memoId, image = it.image, order = it.order)
             })
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 completeClick.call()
             }, {

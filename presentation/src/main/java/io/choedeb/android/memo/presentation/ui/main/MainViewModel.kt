@@ -18,9 +18,6 @@ class MainViewModel(
     private val imagesMapper: PresentationImagesMapper
 ) : BaseViewModel() {
 
-    val fabClick = SingleLiveEvent<Void>()
-    val memoClick = SingleLiveEvent<Long>()
-
     private val _memoList = MutableLiveData<List<PresentationEntity.MemoAndImages>>()
     val memoList: LiveData<List<PresentationEntity.MemoAndImages>> = _memoList
 
@@ -30,12 +27,14 @@ class MainViewModel(
     private val _isFabVisible = MutableLiveData<Boolean>()
     val isFabVisible: LiveData<Boolean> = _isFabVisible
 
+    val fabClick = SingleLiveEvent<Void>()
+
+    val memoClick = SingleLiveEvent<Long>()
+
     val showMessage = SingleLiveEvent<Boolean>()
 
     fun getMemos() {
         addDisposable(getMemosUseCase.execute()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 if (it.isNotEmpty()) {
                     _memoList.value = it.map { data ->
@@ -45,6 +44,7 @@ class MainViewModel(
                     }
                     _memoCount.value = it.size
                 } else {
+                    // delete hard coding text
                     val sampleMemoList = listOf(
                         PresentationEntity.MemoAndImages(
                             PresentationEntity.Memo(

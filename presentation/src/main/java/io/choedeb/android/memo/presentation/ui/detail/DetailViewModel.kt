@@ -49,15 +49,12 @@ class DetailViewModel(
 
     fun getMemoDetail(memoId: Long) {
         addDisposable(getMemoUseCase.execute(memoId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .map {
                 PresentationEntity.MemoAndImages(
                     memoMapper.toPresentationEntity(it.memo),
                     imagesMapper.toPresentationEntity(it.images))
             }
             .subscribe({ data ->
-                //Logger.d(it.toString())
                 if (data != null) {
                     _updateAtText.value = DateFormatUtil.compareFormatDate(data.memo.updateAt)
                     _titleText.value = data.memo.title
@@ -74,8 +71,6 @@ class DetailViewModel(
 
     fun onDeleteClicked(memoId: Long) {
         addDisposable(deleteMemoUseCase.execute(DomainEntity.Memo(memoId = memoId))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 completeDelete.call()
             }, {
