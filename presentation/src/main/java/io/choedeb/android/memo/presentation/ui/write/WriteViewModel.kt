@@ -1,8 +1,6 @@
 package io.choedeb.android.memo.presentation.ui.write
 
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.LiveData
@@ -13,10 +11,8 @@ import io.choedeb.android.memo.domain.usecase.GetMemoUseCase
 import io.choedeb.android.memo.domain.usecase.SetMemoUseCase
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
-import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
-import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
+import io.choedeb.android.memo.presentation.mapper.*
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
-import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 import kotlin.collections.ArrayList
@@ -24,9 +20,7 @@ import kotlin.collections.ArrayList
 class WriteViewModel(
     private val context: Context,
     private val getMemoUseCase: GetMemoUseCase,
-    private val setMemoUseCase: SetMemoUseCase,
-    private val memoMapper: PresentationMemoMapper,
-    private val imagesMapper: PresentationImagesMapper
+    private val setMemoUseCase: SetMemoUseCase
 ) : BaseViewModel() {
 
     private val _todayDate = MutableLiveData<String>()
@@ -68,11 +62,7 @@ class WriteViewModel(
 
     fun getMemo(memoId: Long) {
         addDisposable(getMemoUseCase.execute(memoId)
-            .map {
-                PresentationEntity.MemoAndImages(
-                    memoMapper.toPresentationEntity(it.memo),
-                    imagesMapper.toPresentationEntity(it.images))
-            }
+            .map(DomainEntity.MemoAndImages::toPresentationMemoAndImages)
             .subscribe({ data ->
                 _memoId.value = data.memo.memoId
                 _titleText.value = data.memo.title
@@ -90,13 +80,12 @@ class WriteViewModel(
 
     fun saveMemo() {
         addDisposable(setMemoUseCase.execute(
-            DomainEntity.Memo(
+            PresentationEntity.Memo(
                 _memoId.value!!,
                 _titleText.value.toString(),
-                _contentsText.value.toString()
-            ), tempImageList.map {
-                DomainEntity.Image(imageId = it.imageId, memoId = it.memoId, image = it.image, order = it.order)
-            })
+                _contentsText.value.toString())
+                .toDomainMemo(),
+            tempImageList.toDomainImageList())
             .subscribe({
                 completeClick.call()
             }, {
@@ -152,26 +141,5 @@ class WriteViewModel(
         tempImageList.removeAt(index)
         _imageList.value = tempImageList
         _isImageVisible.value = true
-    }
-
-    fun onRequestPermissionsResult(activity: Activity, requestCode: Int, grantResults: IntArray) {
-        when (requestCode) {
-            AppValueUtil.REQUEST_CODE_CAMERA -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //openCamera(activity)
-                } else {
-                    showMessage.value = context.getString(R.string.text_permission_denied)
-                }
-                return
-            }
-            AppValueUtil.REQUEST_CODE_GALLERY -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //openGallery(activity)
-                } else {
-                    showMessage.value = context.getString(R.string.text_permission_denied)
-                }
-                return
-            }
-        }
     }
 }

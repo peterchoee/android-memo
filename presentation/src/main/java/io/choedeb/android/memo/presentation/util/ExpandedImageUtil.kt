@@ -7,14 +7,18 @@ import androidx.databinding.DataBindingUtil
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.DialogImageExpandedBinding
 
-class ExpandedImageDialog(private val activity: Activity) {
+class ExpandedImageUtil(private val activity: Activity) {
 
     private val linkDialog = AlertDialog.Builder(activity)
 
-    fun show(imageUri: String) {
+    fun showDialog(imageUri: String) {
 
         val binding: DialogImageExpandedBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(activity), R.layout.dialog_image_expanded, null, false)
+            LayoutInflater.from(activity),
+            R.layout.dialog_image_expanded,
+            null,
+            false)
+
         binding.image = imageUri
 
         linkDialog.setView(binding.root)

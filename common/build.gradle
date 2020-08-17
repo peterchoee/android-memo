@@ -17,6 +17,7 @@ dependencies {
     kapt "$commonDependencies.lifecycleCompiler"
     testImplementation "$commonDependencies.lifecycleTest"
     //rxJava3
+    implementation "$dataDependencies.roomRxJava2"
     implementation "$commonDependencies.rxJava3"
     implementation "$commonDependencies.rxAndroid3"
     implementation "$commonDependencies.rxJavaBridge"

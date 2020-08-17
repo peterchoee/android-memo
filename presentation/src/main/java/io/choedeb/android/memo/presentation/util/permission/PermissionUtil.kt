@@ -2,26 +2,32 @@ package io.choedeb.android.memo.presentation.util.permission
 
 import android.app.Activity
 import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
+import android.os.Build
 
 class PermissionUtil(
     private val activity: Activity
 ) {
 
+    private fun usePermission(): Boolean {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+    }
+
     fun getPermissionStatus(permission: String): PermissionStatus {
-        return if (ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED) {
-            PermissionStatus.GRANTED
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-                PermissionStatus.CAN_ASK
+        return if (usePermission()) {
+            if (activity.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED) {
+                PermissionStatus.GRANTED
             } else {
-                PermissionStatus.DENIED
+                PermissionStatus.CAN_ASK
             }
+        } else {
+            PermissionStatus.GRANTED
         }
     }
 
     fun getPermissionRequest(permission: String, requestCode: Int) {
-        ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode)
+        if (usePermission()) {
+            activity.requestPermissions(arrayOf(permission), requestCode)
+        }
+        return
     }
 }

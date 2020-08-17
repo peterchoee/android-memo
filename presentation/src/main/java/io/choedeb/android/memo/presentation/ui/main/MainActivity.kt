@@ -8,6 +8,7 @@ import io.choedeb.android.memo.presentation.databinding.ActivityMainBinding
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.detail.DetailActivity
 import io.choedeb.android.memo.presentation.ui.write.WriteActivity
+import io.choedeb.android.memo.presentation.util.AppValueUtil
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,7 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         })
         viewModel.memoClick.observe(this, Observer {
             val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("memoId", it)
+            intent.putExtra(AppValueUtil.MEMO_ID, it)
             startActivity(intent)
         })
         viewModel.isFabVisible.observe(this, Observer { isVisible ->
