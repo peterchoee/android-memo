@@ -14,7 +14,7 @@
 ## Architecture
 `Clean Architecture` + `MVVM`
 
-*[Clean Architecture]*​
+*[Clean-Architecture]*
 ![Clean Architecture + Modulization](https://user-images.githubusercontent.com/58249793/89202291-b0e53c00-d5ed-11ea-9dc1-5073441d5314.png)
 - `Clean Architecture`의 각 레이어에 맞춰 `Multi Module`로 구성
 - `app`: Application, DI
@@ -25,24 +25,61 @@
 
 *[MVVM]*
 ![design_pattern_mvvm](https://user-images.githubusercontent.com/60678606/76587741-42adb900-6528-11ea-80b3-a362dc1311d2.png)
-- `ACC ViewModel`을 활용한 `MVVM`
-- ViewModel(Presentation Layer)의 데이터를 UI로 넘겨줄때는 `DataBinding`과 `LiveData`를 사용
-- Repository(Data Layer)와 ViewModel 간 데이터스트림은 `RxJava`를 사용
+- `ACC ViewModel`을 활용한 `MVVM` 구현
+- `DataBinding`, `LiveData` 사용
+- `RxJava` 사용
 ​
 ## Package Structure
-Clean Architecture와 MVVM을 구현한 `Multi Module` 프로젝트
 ```
-app
+app (application)
 ├── ...
 ├── src
 │   ├── main
-│   │   ├── data                    # [Data Layer]
 │   │   ├── di                      # Dependency Injection by Koin
-│   │   ├── ui                      # [UI & Presenter Layer]
-│   │   │   ├── base                # Base View, ViewModel & etc...
-│   │   │   ├── ...                 # View UI & Presenter & Adapter
-│   │   ├── util                    # Utility
 │   │   └── MemoApplication.kt
+│   ├── res
+│   │   └── mipmap
+│   └── AndroidManifest.xml
+│
+common
+├── ...
+├── src
+│   ├── main
+│   │   ├── RxExtension.kt          # Bridge RxJava2 to RxJava3 & etc
+│   │   └── ToastExtension.kt       # Toast Message Extension
+│   └── ...
+│
+data
+├── ...
+├── src
+│   ├── main
+│   │   ├── entity                  # Entity for Data layer
+│   │   ├── local                   # RoomDatabase & Dao
+│   │   ├── mapper                  # Mapper Extension
+│   │   └── repository              # Repository
+│   └── ...
+│
+domain
+├── ...
+├── src
+│   ├── main
+│   │   ├── entity                  # Entity for Domain layer
+│   │   ├── repository              # Repository interface
+│   │   └── usecase                 # UseCase
+│   └── ...
+│
+presentation
+├── ...
+├── src
+│   ├── main
+│   │   ├── entity                  # Entity for Presentation layer
+│   │   ├── mapper                  # Mapper Extension
+│   │   ├── ui                      # Activity & ViewModel
+│   │   │   ├── base                # BaseActivity, BaseViewModel
+│   │   │   ├── detail              
+│   │   │   ├── main                
+│   │   │   ├── write               
+│   │   └── util                    # SingleLiveEvent, Permission, Provider, etc...
 │   ├── res
 │   │   ├── ...
 │   │   ├── drawable                # SVG, Image resources
@@ -54,16 +91,20 @@ app
 │   │   │   ├── styles.xml
 │   │   ├── ...
 │   └── AndroidManifest.xml
+│
 ```
 
-## Dependency Graph
-app 모듈에서 구현된 koin 의존성 그래프
+## Library & Tool
+- Koin `2.0.1`
+- ACC ViewModel `2.2.0`
+- LiveData `2.2.0`
+- Room `2.2.3`
+- RxJava3 `3.0.0`
+- Glide `4.11.0`
+- Logger `2.2.0`
+- [More Information](https://github.com/choedeb/SimpleMemo/blob/master/dependencies.gradle)
 
-
-## ShortCuts
-- [app Module](https://google.com, "app Module")
-- [common Module](https://google.com, "common Module")
-- [presentation Module](https://google.com, "presentation Module")
-- [domain Module](https://google.com, "domain Module")
-- [data Module](https://google.com, "data Module")
-- [dependencies.gradle](https://google.com, "dependencies.gradle")
+## ScreenShot
+|Main(Empty)|Write|Main(List)|Detail
+|---|---|---|---|
+|![preview_01](https://user-images.githubusercontent.com/45548673/75117730-7333cd00-56b7-11ea-92e9-f31666ae656c.png)|![preview_02](https://user-images.githubusercontent.com/45548673/75117742-85ae0680-56b7-11ea-9d41-5bc9e28fa58b.png)|![preview_03](https://user-images.githubusercontent.com/45548673/75117744-8cd51480-56b7-11ea-93fa-b217d2538a47.png)|![preview_04](https://user-images.githubusercontent.com/45548673/75117746-8f376e80-56b7-11ea-8e76-ac5cad1bc3af.png)|
