@@ -3,15 +3,18 @@ package io.choedeb.android.memo.presentation.util
 object AppValueUtil {
 
     /**
-     * Permission requestCode Values
+     * Permission & Request Code
+     *
+     * @see REQUEST_CODE_CAMERA -> camera & capture
+     * @see REQUEST_CODE_GALLERY -> gallery picker
      */
-    const val PERMISSION_CAMERA = 101
-    const val PERMISSION_GALLERY = 201
-    const val PICK_IMAGE_CAPTURE = 100
-    const val PICK_IMAGE_GALLERY = 200
+    const val REQUEST_CODE_CAMERA = 1001
+    const val REQUEST_CODE_GALLERY = 1002
 
     /**
-     * App Common Values
+     * App Values
+     *
+     * @see MEMO_ID -> Intent Extra 'memo' id
      */
     const val MEMO_ID = "memoId"
 }

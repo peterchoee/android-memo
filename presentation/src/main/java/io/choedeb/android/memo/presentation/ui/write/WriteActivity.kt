@@ -1,8 +1,6 @@
 package io.choedeb.android.memo.presentation.ui.write
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -17,8 +15,8 @@ import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.ExpandedImageDialog
 import io.choedeb.android.memo.presentation.util.permission.PermissionStatus
 import io.choedeb.android.memo.presentation.util.permission.PermissionUtil
+import io.choedeb.android.memo.presentation.util.PickImageUtil
 import kotlinx.android.synthetic.main.activity_write.*
-import kotlinx.android.synthetic.main.dialog_image_link.view.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -28,6 +26,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
     private val viewModel: WriteViewModel by viewModel()
     private val permissionUtil: PermissionUtil by inject { parametersOf(this) }
     private val expandedImageDialog: ExpandedImageDialog by inject { parametersOf(this) }
+    private val pickImageUtil: PickImageUtil by inject { parametersOf(this) }
 
     override fun setBind() {
         binding.apply {
@@ -49,15 +48,15 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
     }
 
     override fun setObserve() {
-        viewModel.imageClick.observe(this, Observer {
-            expandedImageDialog.show(it)
+        viewModel.imageClick.observe(this, Observer { image ->
+            expandedImageDialog.show(image)
         })
         viewModel.completeClick.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         })
-        viewModel.showMessage.observe(this, Observer {
-            this.toast(getString(R.string.toast_retry))
+        viewModel.showMessage.observe(this, Observer { message ->
+            this.toast(message)
         })
     }
 
@@ -66,7 +65,6 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
         return super.onCreateOptionsMenu(menu)
     }
 
-    @SuppressLint("InflateParams")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -76,10 +74,11 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
             R.id.action_camera -> {
                 when (permissionUtil.getPermissionStatus(Manifest.permission.CAMERA)) {
                     PermissionStatus.GRANTED -> {
-                        viewModel.openCamera(this)
+                        //viewModel.openCamera(this)
+                        pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_CAMERA)
                     }
                     PermissionStatus.CAN_ASK -> {
-                        permissionUtil.getPermissionRequest(Manifest.permission.CAMERA, AppValueUtil.PERMISSION_CAMERA)
+                        permissionUtil.getPermissionRequest(Manifest.permission.CAMERA, AppValueUtil.REQUEST_CODE_CAMERA)
                     }
                     PermissionStatus.DENIED -> {
                         this.toast(getString(R.string.text_permission_denied))
@@ -90,10 +89,11 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
             R.id.action_gallery -> {
                 when (permissionUtil.getPermissionStatus(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     PermissionStatus.GRANTED -> {
-                        viewModel.openGallery(this)
+                        //viewModel.openGallery(this)
+                        pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_GALLERY)
                     }
                     PermissionStatus.CAN_ASK -> {
-                        permissionUtil.getPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE, AppValueUtil.PERMISSION_GALLERY)
+                        permissionUtil.getPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE, AppValueUtil.REQUEST_CODE_GALLERY)
                     }
                     PermissionStatus.DENIED -> {
                         this.toast(getString(R.string.text_permission_denied))
@@ -102,7 +102,11 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
                 true
             }
             R.id.action_link -> {
-                openLinkDialog()
+                pickImageUtil.openLinkDialog(object: PickImageUtil.OnDialogListener {
+                    override fun onPositiveClicked(images: ArrayList<String>) {
+                        viewModel.setImageUri(images)
+                    }
+                })
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -113,22 +117,13 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
         viewModel.onRequestPermissionsResult(this, requestCode, grantResults)
     }
 
+    /**
+     * Activity Result for Camera & Gallery
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        viewModel.onActivityResult(requestCode, resultCode, data)
-    }
 
-    @SuppressLint("InflateParams")
-    private fun openLinkDialog() {
-        val linkDialog = AlertDialog.Builder(this)
-        val dialogView = layoutInflater.inflate(R.layout.dialog_image_link, null)
-        linkDialog.setView(dialogView)
-            .setPositiveButton(getString(R.string.text_dialog_link_positive)) { _, _->
-                viewModel.setImageFromLink(dialogView.etLink.text.toString())
-            }
-            .setNegativeButton(getString(R.string.text_dialog_link_negative)) { dialog, _ ->
-                dialog.dismiss()
-            }
-        linkDialog.show()
+        val images = pickImageUtil.getImageFromResult(requestCode, data)
+        viewModel.setImageUri(images)
     }
 }
