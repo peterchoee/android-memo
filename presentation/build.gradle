@@ -1,10 +1,48 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+apply from: '../common-android.gradle'
+
+apply from: '../dependencies.gradle'
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
+dependencies {
+    //module
+    implementation project("$modulization.common")
+    implementation project("$modulization.domain")
+    //android
+    implementation "$presentationDependencies.appcompat"
+    implementation "$presentationDependencies.ktx"
+    implementation "$presentationDependencies.constraint"
+    implementation "$presentationDependencies.material"
+    //glide
+    implementation "$presentationDependencies.glide"
+    kapt "$presentationDependencies.glideCompiler"
+    //logger
+    implementation "$presentationDependencies.logger"
+    //koin
+    implementation "$presentationDependencies.koinCore"
+    implementation "$presentationDependencies.koinCoreExt"
+    implementation "$presentationDependencies.koinAndroid"
+    implementation "$presentationDependencies.koinViewModel"
+    implementation "$presentationDependencies.koinExt"
+    testImplementation "$appDependencies.koinTest"
+    //lifecycle
+    implementation "$presentationDependencies.lifecycleViewModel"
+    implementation "$presentationDependencies.lifecycleLiveData"
+    implementation "$presentationDependencies.lifecycleSavedstate"
+    kapt "$presentationDependencies.lifecycleCompiler"
+    testImplementation "$presentationDependencies.lifecycleTest"
+    //rxJava3
+    implementation "$presentationDependencies.rxJava3"
+    implementation "$presentationDependencies.rxAndroid3"
+    implementation "$presentationDependencies.rxJavaBridge"
+}

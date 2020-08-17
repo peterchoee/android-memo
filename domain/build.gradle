@@ -1,10 +1,21 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply plugin: 'com.android.library'
+
+apply from: '../common-android.gradle'
+
+apply from: '../dependencies.gradle'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //module
+    implementation project("$modulization.common")
+    //koin
+    implementation "$domainDependencies.koinCore"
+    implementation "$domainDependencies.koinCoreExt"
+    implementation "$domainDependencies.koinAndroid"
+    implementation "$domainDependencies.koinViewModel"
+    implementation "$domainDependencies.koinExt"
+    testImplementation "$domainDependencies.koinTest"
+    //rxJava3
+    implementation "$domainDependencies.rxJava3"
+    implementation "$domainDependencies.rxAndroid3"
+    implementation "$domainDependencies.rxJavaBridge"
 }
-
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"

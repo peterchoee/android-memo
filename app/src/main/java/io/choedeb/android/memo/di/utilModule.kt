@@ -1,15 +1,20 @@
 package io.choedeb.android.memo.di
 
 import android.app.Activity
-import io.choedeb.android.memo.util.ExpandedImageDialog
-import io.choedeb.android.memo.util.permission.PermissionUtil
+import io.choedeb.android.memo.presentation.util.ExpandedImageUtil
+import io.choedeb.android.memo.presentation.util.permission.PermissionUtil
+import io.choedeb.android.memo.presentation.util.PickImageUtil
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val utilModule = module {
 
-    // 권한 유틸리티
+    // permission utility
     single { (activity: Activity) -> PermissionUtil(activity) }
 
-    // 이미지 상세(확대) 다이얼로그 유틸리티
-    factory { (activity: Activity) -> ExpandedImageDialog(activity) }
+    // expanded image dialog utility
+    factory { (activity: Activity) -> ExpandedImageUtil(activity) }
+
+    // image picker utility with Camera, Gallery, Link
+    single { (activity: Activity) -> PickImageUtil(activity, androidContext()) }
 }

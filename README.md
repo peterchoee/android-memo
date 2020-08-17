@@ -1,22 +1,36 @@
-# 수정중!!! 
-사진 촬영, 갤러리 이미지 선택, 이미지 링크 삽입 기능을 가진 메모 앱  
+# SimpleMemo 
+`Clean Architecture`, `MVVM`, `Multi Module`을 구현한 간단한 메모장 앱  
+
+## Feature
+- 텍스트 메모 작성, 카메라/갤러리 이미지 추가, 링크 이미지 추가
+- 메모 추가/삭제/수정
 ​
 ## Environment
-- IDE: Android Studio 3.5.3
-- Language: `kotlin` 1.3.61
+- IDE: Android Studio 4.0.1
+- Language: `kotlin` 1.3.72
 - minSdkVersion: 21
 - targetSdkVersion: 29
 ​
 ## Architecture
-Design Pattern: `MVVM`  
-​
+`Clean Architecture` + `MVVM`
+
+*[Clean Architecture]*​
+![Clean Architecture + Modulization](https://user-images.githubusercontent.com/58249793/89202291-b0e53c00-d5ed-11ea-9dc1-5073441d5314.png)
+- `Clean Architecture`의 각 레이어에 맞춰 `Multi Module`로 구성
+- `app`: Application, DI
+- `common`: Common Resource
+- `presentation`: UI(Activity&Fragment), ViewModel
+- `domain`: UseCase, Mapper
+- `data`: Repository, Local(Room), Mapper
+
 *[MVVM]*
 ![design_pattern_mvvm](https://user-images.githubusercontent.com/60678606/76587741-42adb900-6528-11ea-80b3-a362dc1311d2.png)
-- ACC ViewModel을 활용한 MVVM
-- ViewModel(Presenter Layer)의 데이터를 UI로 넘겨줄때는 `DataBinding`과 `LiveData`를 사용
-- Repository(Data Layer)와 ViewModel간 데이터스트림은 `RxJava`를 사용
+- `ACC ViewModel`을 활용한 `MVVM`
+- ViewModel(Presentation Layer)의 데이터를 UI로 넘겨줄때는 `DataBinding`과 `LiveData`를 사용
+- Repository(Data Layer)와 ViewModel 간 데이터스트림은 `RxJava`를 사용
 ​
 ## Package Structure
+Clean Architecture와 MVVM을 구현한 `Multi Module` 프로젝트
 ```
 app
 ├── ...
@@ -41,107 +55,15 @@ app
 │   │   ├── ...
 │   └── AndroidManifest.xml
 ```
-​
-## Gradle Dependency (Library)
-```
-[build.gradle (project)]
-​
-buildscript {
-    ext {
-        kotlin_version = '1.3.61'
-        appcompat_version = '1.1.0'
-        ktx_version = '1.2.0'
-        constraintlayout_version = '1.1.3'
-        material_version = '1.2.0-alpha04'
-        lifecycle_version = '2.2.0'
-        arch_version = '2.1.0'
-        koin_version = '2.0.1'
-        room_version = '2.2.3'
-        rxjava_version = '3.0.0'
-        glide_version = '4.11.0'
-        logger_version = '2.2.0'                
-        junit_version = '4.12'
-        junit_ext_version = '1.1.1'
-        androidx_test_version = '1.2.0'
-        robolectric_version = '4.2.1'
-    }
-}
-​
-​
-[build.gradle (app)]
 
-android {
-    compileOptions {
-        targetCompatibility = "8"
-        sourceCompatibility = "8"
-    }
-    dataBinding {
-        enabled = true
-    }
-}
+## Dependency Graph
+app 모듈에서 구현된 koin 의존성 그래프
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
-    implementation "androidx.core:core-ktx:$ktx_version"
-    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
-    implementation "com.google.android.material:material:$material_version"
-    /* Lifecycle */
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-    testImplementation "androidx.arch.core:core-testing:$arch_version"
-    /* Room */
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    testImplementation "androidx.room:room-testing:$room_version"
-    /* Koin */
-    implementation "org.koin:koin-core:$koin_version"
-    implementation "org.koin:koin-core-ext:$koin_version"
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-ext:$koin_version"
-    testImplementation "org.koin:koin-test:$koin_version"
-    /* RxJava3 */
-    implementation "io.reactivex.rxjava3:rxjava:$rxjava_version"
-    implementation "io.reactivex.rxjava3:rxandroid:$rxjava_version"
-    implementation "com.github.akarnokd:rxjava3-bridge:$rxjava_version"
-    /* Glide */
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
-    /* Logger */
-    implementation "com.orhanobut:logger:$logger_version"
-    /* Testing */
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
-    testImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.ext:junit:$junit_ext_version"
-    androidTestImplementation "androidx.test.ext:junit-ktx:$junit_ext_version"
-    androidTestImplementation "androidx.test:core:$androidx_test_version"
-    androidTestImplementation "androidx.test:runner:$androidx_test_version"
-    androidTestImplementation "androidx.test:rules:$androidx_test_version"
-}
-```
-​
-### Testing
-```
-[build.gradle (app)]
-​
-android {
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
-}
-dependencies {
-    // Testing
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.mockito:mockito-core:3.1.0'
-    testImplementation 'org.mockito:mockito-inline:2.21.0'
-    testImplementation 'org.robolectric:robolectric:4.2.1'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-}
-```
+
+## ShortCuts
+- [app Module](https://google.com, "app Module")
+- [common Module](https://google.com, "common Module")
+- [presentation Module](https://google.com, "presentation Module")
+- [domain Module](https://google.com, "domain Module")
+- [data Module](https://google.com, "data Module")
+- [dependencies.gradle](https://google.com, "dependencies.gradle")

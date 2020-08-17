@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="io.choedeb.android.memo">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,21 +18,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_app_id"/>
+        android:allowBackup="false"
+        android:fullBackupContent="false">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="io.choedeb.android.memo.fileprovider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
         </provider>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="io.choedeb.android.memo.presentation.ui.main.MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,8 +38,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.detail.DetailActivity" />
-        <activity android:name=".ui.write.WriteActivity"/>
+        <activity android:name="io.choedeb.android.memo.presentation.ui.detail.DetailActivity" />
+        <activity android:name="io.choedeb.android.memo.presentation.ui.write.WriteActivity"/>
     </application>
 
 </manifest>

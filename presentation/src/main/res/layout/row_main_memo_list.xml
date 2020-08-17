@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="io.choedeb.android.memo.presentation.util.DateFormatUtil"/>
+
+        <variable
+            name="item"
+            type="io.choedeb.android.memo.presentation.entity.PresentationEntity.MemoAndImages" />
+
+        <variable
+            name="viewModel"
+            type="io.choedeb.android.memo.presentation.ui.main.MainViewModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardUseCompatPadding="false"
+        app:cardCornerRadius="8dp"
+        android:elevation="8dp"
+        android:layout_marginTop="@dimen/space_8dp"
+        android:layout_marginBottom="@dimen/space_8dp"
+        android:layout_marginStart="@dimen/space_16dp"
+        android:layout_marginEnd="@dimen/space_16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_16dp"
+            android:background="@drawable/bg_memo_list"
+            android:clickable="@{item.memo.memoId != -1 ? true : false}"
+            android:onClick="@{() -> viewModel.onMemoClicked(item.memo.memoId)}">
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{DateFormatUtil.compareFormatDate(item.memo.updateAt)}"
+                android:textAppearance="@style/Text.Date.Dark.Small"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{item.memo.title}"
+                android:textAppearance="@style/Text.Contents.Dark"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:paddingTop="@dimen/space_1dp"
+                android:layout_marginTop="@dimen/space_6dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvDate"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvContents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="@{item.memo.contents}"
+                android:textAppearance="@style/Text.Contents.Sub"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:paddingTop="@dimen/space_1dp"
+                android:layout_marginTop="@dimen/space_6dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:scaleType="centerCrop"
+                app:image="@{!item.images.empty ? item.images.get(0).image : null}"
+                android:visibility="@{!item.images.empty ? View.VISIBLE : View.GONE}"
+                android:layout_marginTop="@dimen/space_6dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvContents"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/description_memo_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

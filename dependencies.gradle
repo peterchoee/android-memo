@@ -1,0 +1,123 @@
+ext {
+    application = [
+            id                          : 'io.choedeb.android.memo'
+    ]
+    versions = [
+            //android
+            minSdk                      : 21,
+            compileSdk                  : 29,
+            targetSdk                   : 29,
+            versionCode                 : 1,
+            versionName                 : '1.0.0',
+
+            //gradle
+            gradleBuildTool             : '4.0.1',
+            spotlessGradle              : '4.5.1',
+            versionPlugin               : '0.28.0',
+
+            //library
+            kotlinVersion               : '1.3.72',
+            appcompatVersion            : '1.1.0',
+            ktxVersion                  : '1.2.0',
+            constraintlayoutVersion     : '1.1.3',
+            materialVersion             : '1.3.0-alpha02',
+            lifecycleVersion            : '2.2.0',
+            archVersion                 : '2.1.0',
+            koinVersion                 : '2.0.1',
+            roomVersion                 : '2.2.3',
+            rxjavaVersion               : '3.0.0',
+            glideVersion                : '4.11.0',
+            loggerVersion               : '2.2.0',
+            junitVersion                : '4.12',
+            junitExtVersion             : '1.1.1',
+            androidxTestVersion         : '1.2.0',
+            robolectricVersion          : '4.2.1'
+    ]
+    modulization = [
+            common                      : ':common',
+            presentation                : ':presentation',
+            domain                      : ':domain',
+            data                        : ':data'
+    ]
+    //app Module
+    appDependencies = [
+            koinCore                : "org.koin:koin-core:$versions.koinVersion",
+            koinCoreExt             : "org.koin:koin-core-ext:$versions.koinVersion",
+            koinAndroid             : "org.koin:koin-android:$versions.koinVersion",
+            koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
+            koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
+            koinTest                : "org.koin:koin-test:$versions.koinVersion",
+            roomRuntime             : "androidx.room:room-runtime:$versions.roomVersion",
+            roomRxJava2             : "androidx.room:room-rxjava2:$versions.roomVersion",
+            roomCompiler            : "androidx.room:room-compiler:$versions.roomVersion",
+            roomTest                : "androidx.room:room-testing:$versions.roomVersion",
+            logger                  : "com.orhanobut:logger:$versions.loggerVersion",
+    ]
+    //presentation Module
+    presentationDependencies = [
+            appcompat               : "androidx.appcompat:appcompat:$versions.appcompatVersion",
+            ktx                     : "androidx.core:core-ktx:$versions.ktxVersion",
+            constraint              : "androidx.constraintlayout:constraintlayout:$versions.constraintlayoutVersion",
+            material                : "com.google.android.material:material:$versions.materialVersion",
+            glide                   : "com.github.bumptech.glide:glide:$versions.glideVersion",
+            glideCompiler           : "com.github.bumptech.glide:compiler:$versions.glideVersion",
+            logger                  : "com.orhanobut:logger:$versions.loggerVersion",
+            lifecycleViewModel      : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleVersion",
+            lifecycleLiveData       : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycleVersion",
+            lifecycleSavedstate     : "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion",
+            lifecycleCompiler       : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycleVersion",
+            lifecycleTest           : "androidx.arch.core:core-testing:$versions.archVersion",
+            rxJava3                 : "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion",
+            rxAndroid3              : "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion",
+            rxJavaBridge            : "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion",
+            koinCore                : "org.koin:koin-core:$versions.koinVersion",
+            koinCoreExt             : "org.koin:koin-core-ext:$versions.koinVersion",
+            koinAndroid             : "org.koin:koin-android:$versions.koinVersion",
+            koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
+            koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
+            koinTest                : "org.koin:koin-test:$versions.koinVersion"
+    ]
+    //domain Module
+    domainDependencies = [
+            koinCore                : "org.koin:koin-core:$versions.koinVersion",
+            koinCoreExt             : "org.koin:koin-core-ext:$versions.koinVersion",
+            koinAndroid             : "org.koin:koin-android:$versions.koinVersion",
+            koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
+            koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
+            koinTest                : "org.koin:koin-test:$versions.koinVersion",
+            rxJava3                 : "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion",
+            rxAndroid3              : "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion",
+            rxJavaBridge            : "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion",
+    ]
+    //data Module
+    dataDependencies = [
+            koinCore                : "org.koin:koin-core:$versions.koinVersion",
+            koinCoreExt             : "org.koin:koin-core-ext:$versions.koinVersion",
+            koinAndroid             : "org.koin:koin-android:$versions.koinVersion",
+            koinViewModel           : "org.koin:koin-androidx-viewmodel:$versions.koinVersion",
+            koinExt                 : "org.koin:koin-androidx-ext:$versions.koinVersion",
+            koinTest                : "org.koin:koin-test:$versions.koinVersion",
+            roomRuntime             : "androidx.room:room-runtime:$versions.roomVersion",
+            roomRxJava2             : "androidx.room:room-rxjava2:$versions.roomVersion",
+            roomCompiler            : "androidx.room:room-compiler:$versions.roomVersion",
+            roomTest                : "androidx.room:room-testing:$versions.roomVersion",
+            rxJava3                 : "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion",
+            rxAndroid3              : "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion",
+            rxJavaBridge            : "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion",
+    ]
+    //common Module
+    commonDependencies = [
+            appcompat               : "androidx.appcompat:appcompat:$versions.appcompatVersion",
+            ktx                     : "androidx.core:core-ktx:$versions.ktxVersion",
+            constraint              : "androidx.constraintlayout:constraintlayout:$versions.constraintlayoutVersion",
+            material                : "com.google.android.material:material:$versions.materialVersion",
+            lifecycleViewModel      : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleVersion",
+            lifecycleLiveData       : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.lifecycleVersion",
+            lifecycleSavedstate     : "androidx.lifecycle:lifecycle-viewmodel-savedstate:$versions.lifecycleVersion",
+            lifecycleCompiler       : "androidx.lifecycle:lifecycle-compiler:$versions.lifecycleVersion",
+            lifecycleTest           : "androidx.arch.core:core-testing:$versions.archVersion",
+            rxJava3                 : "io.reactivex.rxjava3:rxjava:$versions.rxjavaVersion",
+            rxAndroid3              : "io.reactivex.rxjava3:rxandroid:$versions.rxjavaVersion",
+            rxJavaBridge            : "com.github.akarnokd:rxjava3-bridge:$versions.rxjavaVersion"
+    ]
+}
