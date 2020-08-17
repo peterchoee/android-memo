@@ -5,19 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
+import io.choedeb.android.memo.domain.entity.DomainEntity
 import io.choedeb.android.memo.domain.usecase.GetMemosUseCase
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
-import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
-import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
+import io.choedeb.android.memo.presentation.mapper.toPresentationMemoAndImageList
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 
 class MainViewModel(
     private val context: Context,
-    private val getMemosUseCase: GetMemosUseCase,
-    private val memoMapper: PresentationMemoMapper,
-    private val imagesMapper: PresentationImagesMapper
+    private val getMemosUseCase: GetMemosUseCase
 ) : BaseViewModel() {
 
     private val _memoList = MutableLiveData<List<PresentationEntity.MemoAndImages>>()
@@ -37,14 +35,11 @@ class MainViewModel(
 
     fun getMemos() {
         addDisposable(getMemosUseCase.execute()
-            .subscribe({
-                if (it.isNotEmpty()) {
-                    _memoList.value = it.map { data ->
-                        PresentationEntity.MemoAndImages(
-                            memoMapper.toPresentationEntity(data.memo),
-                            imagesMapper.toPresentationEntity(data.images))
-                    }
-                    _memoCount.value = it.size
+            .map(List<DomainEntity.MemoAndImages>::toPresentationMemoAndImageList)
+            .subscribe({ data ->
+                if (data.isNotEmpty()) {
+                    _memoList.value = data
+                    _memoCount.value = data.size
                 } else {
                     // when data(memos) is empty or null
                     val sampleMemoList = listOf(
@@ -53,8 +48,7 @@ class MainViewModel(
                                 -1,
                                 context.getString(R.string.text_empty_title),
                                 context.getString(R.string.text_empty_contents)
-                            )
-                        ))
+                            )))
                     _memoList.value = sampleMemoList
                     _memoCount.value = 0
                 }

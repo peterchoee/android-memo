@@ -7,17 +7,14 @@ import io.choedeb.android.memo.domain.entity.DomainEntity
 import io.choedeb.android.memo.domain.usecase.DeleteMemoUseCase
 import io.choedeb.android.memo.domain.usecase.GetMemoUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
-import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
-import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
+import io.choedeb.android.memo.presentation.mapper.toPresentationMemoAndImages
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 
 class DetailViewModel(
     private val getMemoUseCase: GetMemoUseCase,
-    private val deleteMemoUseCase: DeleteMemoUseCase,
-    private val memoMapper: PresentationMemoMapper,
-    private val imagesMapper: PresentationImagesMapper
+    private val deleteMemoUseCase: DeleteMemoUseCase
 ) : BaseViewModel() {
 
     private val _updateAtText = MutableLiveData<String>()
@@ -47,11 +44,7 @@ class DetailViewModel(
 
     fun getMemoDetail(memoId: Long) {
         addDisposable(getMemoUseCase.execute(memoId)
-            .map {
-                PresentationEntity.MemoAndImages(
-                    memoMapper.toPresentationEntity(it.memo),
-                    imagesMapper.toPresentationEntity(it.images))
-            }
+            .map(DomainEntity.MemoAndImages::toPresentationMemoAndImages)
             .subscribe({ data ->
                 if (data != null) {
                     _updateAtText.value = DateFormatUtil.compareFormatDate(data.memo.updateAt)
