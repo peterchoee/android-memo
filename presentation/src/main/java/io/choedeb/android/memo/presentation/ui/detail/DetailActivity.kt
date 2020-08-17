@@ -12,7 +12,7 @@ import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.main.MainActivity
 import io.choedeb.android.memo.presentation.ui.write.WriteActivity
 import io.choedeb.android.memo.presentation.util.AppValueUtil
-import io.choedeb.android.memo.presentation.util.ExpandedImageDialog
+import io.choedeb.android.memo.presentation.util.ExpandedImageUtil
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,7 +21,7 @@ import org.koin.core.parameter.parametersOf
 class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_detail) {
 
     private val viewModel: DetailViewModel by viewModel()
-    private val expandedImageDialog: ExpandedImageDialog by inject { parametersOf(this) }
+    private val expandedImageUtil: ExpandedImageUtil by inject { parametersOf(this) }
 
     private var memoId: Long = 0
 
@@ -45,8 +45,8 @@ class DetailActivity : BaseActivity<ActivityDetailBinding>(R.layout.activity_det
     }
 
     override fun setObserve() {
-        viewModel.imageClick.observe(this, Observer {
-            expandedImageDialog.show(it)
+        viewModel.imageClick.observe(this, Observer { image ->
+            expandedImageUtil.showDialog(image)
         })
         viewModel.completeDelete.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))

@@ -12,7 +12,7 @@ import io.choedeb.android.memo.presentation.databinding.ActivityWriteBinding
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseActivity
 import io.choedeb.android.memo.presentation.ui.main.MainActivity
 import io.choedeb.android.memo.presentation.util.AppValueUtil
-import io.choedeb.android.memo.presentation.util.ExpandedImageDialog
+import io.choedeb.android.memo.presentation.util.ExpandedImageUtil
 import io.choedeb.android.memo.presentation.util.permission.PermissionStatus
 import io.choedeb.android.memo.presentation.util.permission.PermissionUtil
 import io.choedeb.android.memo.presentation.util.PickImageUtil
@@ -25,7 +25,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
 
     private val viewModel: WriteViewModel by viewModel()
     private val permissionUtil: PermissionUtil by inject { parametersOf(this) }
-    private val expandedImageDialog: ExpandedImageDialog by inject { parametersOf(this) }
+    private val expandedImageUtil: ExpandedImageUtil by inject { parametersOf(this) }
     private val pickImageUtil: PickImageUtil by inject { parametersOf(this) }
 
     override fun setBind() {
@@ -49,7 +49,7 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
 
     override fun setObserve() {
         viewModel.imageClick.observe(this, Observer { image ->
-            expandedImageDialog.show(image)
+            expandedImageUtil.showDialog(image)
         })
         viewModel.completeClick.observe(this, Observer {
             startActivity(Intent(this, MainActivity::class.java))

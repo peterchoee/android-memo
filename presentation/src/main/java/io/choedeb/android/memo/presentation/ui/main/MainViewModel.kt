@@ -3,14 +3,13 @@ package io.choedeb.android.memo.presentation.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.orhanobut.logger.Logger
 import io.choedeb.android.memo.domain.usecase.GetMemosUseCase
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
 import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainViewModel(
     private val getMemosUseCase: GetMemosUseCase,
@@ -58,7 +57,7 @@ class MainViewModel(
                     _memoCount.value = 0
                 }
             }, {
-                //Logger.d(it.message)
+                Logger.d(it.message)
                 showMessage.call()
             })
         )

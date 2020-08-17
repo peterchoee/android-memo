@@ -12,8 +12,6 @@ import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class DetailViewModel(
     private val getMemoUseCase: GetMemoUseCase,
@@ -41,7 +39,7 @@ class DetailViewModel(
 
     val completeDelete = SingleLiveEvent<Void>()
 
-    val showMessage = SingleLiveEvent<Boolean>()
+    val showMessage = SingleLiveEvent<Void>()
 
     init {
         _isImageVisible.value = false
@@ -74,7 +72,7 @@ class DetailViewModel(
             .subscribe({
                 completeDelete.call()
             }, {
-                //Logger.d(it.message)
+                Logger.d(it.message)
                 showMessage.call()
             })
         )
