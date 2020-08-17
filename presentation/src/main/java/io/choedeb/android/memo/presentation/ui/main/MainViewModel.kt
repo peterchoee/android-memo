@@ -1,10 +1,12 @@
 package io.choedeb.android.memo.presentation.ui.main
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import io.choedeb.android.memo.domain.usecase.GetMemosUseCase
+import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
 import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
@@ -12,6 +14,7 @@ import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 
 class MainViewModel(
+    private val context: Context,
     private val getMemosUseCase: GetMemosUseCase,
     private val memoMapper: PresentationMemoMapper,
     private val imagesMapper: PresentationImagesMapper
@@ -43,14 +46,13 @@ class MainViewModel(
                     }
                     _memoCount.value = it.size
                 } else {
-                    // delete hard coding text
+                    // when data(memos) is empty or null
                     val sampleMemoList = listOf(
                         PresentationEntity.MemoAndImages(
                             PresentationEntity.Memo(
                                 -1,
-                                "아직 작성한 메모가 없어요. \uD83D\uDE0D",
-                                "하단의 버튼(+)을 누르면 메모를 작성할 수 있습니다. " +
-                                        "메모를 작성하면 샘플 메모는 삭제됩니다."
+                                context.getString(R.string.text_empty_title),
+                                context.getString(R.string.text_empty_contents)
                             )
                         ))
                     _memoList.value = sampleMemoList
