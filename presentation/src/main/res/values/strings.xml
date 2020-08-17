@@ -39,8 +39,4 @@
     <string name="description_clear_image">이미지 삭제 버튼</string>
     <string name="description_image_expanded">확대된 이미지</string>
     <string name="toast_camera_disable">카메라를 사용할 수 없는 단말기 입니다.</string>
-    <!-- AdMob -->
-    <string name="admob_app_id">ca-app-pub-2061208236024523~9007211690</string>
-    <string name="admob_banner_id_detail">ca-app-pub-2061208236024523/3263930424</string>
-    <string name="admob_banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
