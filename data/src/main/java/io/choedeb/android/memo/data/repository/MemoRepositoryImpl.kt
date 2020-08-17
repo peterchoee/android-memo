@@ -1,6 +1,7 @@
 package io.choedeb.android.memo.data.repository
 
 import io.choedeb.android.memo.common.ioWithMainThread
+import io.choedeb.android.memo.data.entity.DataEntity
 import io.choedeb.android.memo.data.local.AppDatabaseDao
 import io.choedeb.android.memo.data.mapper.*
 import io.choedeb.android.memo.domain.entity.DomainEntity
@@ -9,32 +10,24 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 class MemoRepositoryImpl(
-    private val appDatabaseDao: AppDatabaseDao,
-    private val memoMapper: DataMemoMapper,
-    private val imagesMapper: DataImagesMapper
+    private val appDatabaseDao: AppDatabaseDao
 ) : MemoRepository {
 
     override fun getMemos(): Single<List<DomainEntity.MemoAndImages>> {
-        return appDatabaseDao.selectMemos().map {
-            it.map { data ->
-                DomainEntity.MemoAndImages(memoMapper.toDomainEntity(data.memo), imagesMapper.toDomainEntity(data.images))
-            }
-        }.ioWithMainThread()
+        return appDatabaseDao.selectMemos().map(List<DataEntity.MemoAndImages>::toDomainMemoAndImageList).ioWithMainThread()
     }
 
     override fun getMemo(memoId: Long): Single<DomainEntity.MemoAndImages> {
-        return appDatabaseDao.selectMemo(memoId).map { data ->
-            DomainEntity.MemoAndImages(memoMapper.toDomainEntity(data.memo), imagesMapper.toDomainEntity(data.images))
-        }.ioWithMainThread()
+        return appDatabaseDao.selectMemo(memoId).map(DataEntity.MemoAndImages::toDomainMemoAndImages).ioWithMainThread()
     }
 
     override fun deleteMemo(memo: DomainEntity.Memo): Completable {
-        return appDatabaseDao.deleteMemo(memoMapper.toDataEntity(memo)).ioWithMainThread()
+        return appDatabaseDao.deleteMemo(memo.toDataMemo()).ioWithMainThread()
     }
 
     override fun setMemoAndImages(memo: DomainEntity.Memo, images: List<DomainEntity.Image>): Completable {
         return io.reactivex.Completable.fromAction {
-            appDatabaseDao.insertMemoAndImages(memoMapper.toDataEntity(memo), imagesMapper.toDataEntity(images))
+            appDatabaseDao.insertMemoAndImages(memo.toDataMemo(), images.toDataImageList())
         }.ioWithMainThread()
     }
 }
