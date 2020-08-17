@@ -1,8 +1,6 @@
 package io.choedeb.android.memo.presentation.ui.write
 
-import android.app.Activity
 import android.content.Context
-import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.LiveData
@@ -16,7 +14,6 @@ import io.choedeb.android.memo.presentation.entity.PresentationEntity
 import io.choedeb.android.memo.presentation.mapper.PresentationImagesMapper
 import io.choedeb.android.memo.presentation.mapper.PresentationMemoMapper
 import io.choedeb.android.memo.presentation.ui.base.ui.BaseViewModel
-import io.choedeb.android.memo.presentation.util.AppValueUtil
 import io.choedeb.android.memo.presentation.util.DateFormatUtil
 import io.choedeb.android.memo.presentation.util.SingleLiveEvent
 import kotlin.collections.ArrayList
@@ -152,26 +149,5 @@ class WriteViewModel(
         tempImageList.removeAt(index)
         _imageList.value = tempImageList
         _isImageVisible.value = true
-    }
-
-    fun onRequestPermissionsResult(activity: Activity, requestCode: Int, grantResults: IntArray) {
-        when (requestCode) {
-            AppValueUtil.REQUEST_CODE_CAMERA -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //openCamera(activity)
-                } else {
-                    showMessage.value = context.getString(R.string.text_permission_denied)
-                }
-                return
-            }
-            AppValueUtil.REQUEST_CODE_GALLERY -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //openGallery(activity)
-                } else {
-                    showMessage.value = context.getString(R.string.text_permission_denied)
-                }
-                return
-            }
-        }
     }
 }

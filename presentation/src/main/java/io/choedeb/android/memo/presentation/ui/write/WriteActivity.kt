@@ -2,10 +2,12 @@ package io.choedeb.android.memo.presentation.ui.write
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
+import com.orhanobut.logger.Logger
 import io.choedeb.android.memo.common.toast
 import io.choedeb.android.memo.presentation.R
 import io.choedeb.android.memo.presentation.databinding.ActivityWriteBinding
@@ -74,14 +76,12 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
             R.id.action_camera -> {
                 when (permissionUtil.getPermissionStatus(Manifest.permission.CAMERA)) {
                     PermissionStatus.GRANTED -> {
-                        //viewModel.openCamera(this)
                         pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_CAMERA)
                     }
                     PermissionStatus.CAN_ASK -> {
-                        permissionUtil.getPermissionRequest(Manifest.permission.CAMERA, AppValueUtil.REQUEST_CODE_CAMERA)
-                    }
-                    PermissionStatus.DENIED -> {
-                        this.toast(getString(R.string.text_permission_denied))
+                        permissionUtil.getPermissionRequest(
+                            Manifest.permission.CAMERA,
+                            AppValueUtil.REQUEST_CODE_CAMERA)
                     }
                 }
                 true
@@ -89,14 +89,12 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
             R.id.action_gallery -> {
                 when (permissionUtil.getPermissionStatus(Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     PermissionStatus.GRANTED -> {
-                        //viewModel.openGallery(this)
                         pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_GALLERY)
                     }
                     PermissionStatus.CAN_ASK -> {
-                        permissionUtil.getPermissionRequest(Manifest.permission.READ_EXTERNAL_STORAGE, AppValueUtil.REQUEST_CODE_GALLERY)
-                    }
-                    PermissionStatus.DENIED -> {
-                        this.toast(getString(R.string.text_permission_denied))
+                        permissionUtil.getPermissionRequest(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            AppValueUtil.REQUEST_CODE_GALLERY)
                     }
                 }
                 true
@@ -113,8 +111,28 @@ class WriteActivity : BaseActivity<ActivityWriteBinding>(R.layout.activity_write
         }
     }
 
+    /**
+     * Permission Result for Camera & Gallery
+     */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        viewModel.onRequestPermissionsResult(this, requestCode, grantResults)
+        when (requestCode) {
+            AppValueUtil.REQUEST_CODE_CAMERA -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_CAMERA)
+                } else {
+                    this.toast(getString(R.string.text_permission_denied))
+                }
+                return
+            }
+            AppValueUtil.REQUEST_CODE_GALLERY -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    pickImageUtil.getImageToIntent(AppValueUtil.REQUEST_CODE_GALLERY)
+                } else {
+                    this.toast(getString(R.string.text_permission_denied))
+                }
+                return
+            }
+        }
     }
 
     /**
