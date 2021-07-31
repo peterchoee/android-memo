@@ -144,6 +144,9 @@ obj/
 .idea/libraries/
 .idea/shelf/
 .idea/workspace.xml
+.idea/gradle.xml
+.idea/jarRepositories.xml
+.idea/runConfigurations.xml
 .idea/tasks.xml
 .idea/.name
 .idea/compiler.xml
